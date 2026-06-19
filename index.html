@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en" class="bg-[#09090b] text-slate-100 antialiased selection:bg-purple-500 selection:text-white">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vexa // Immersive Creator Discovery Network</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #09090b;
+        }
+        .font-syne {
+            font-family: 'Syne', sans-serif;
+        }
+        /* Custom dynamic neon glows */
+        .neon-border-glow:hover {
+            box-shadow: 0 0 25px -5px rgba(139, 92, 246, 0.4), 0 0 15px -5px rgba(236, 72, 153, 0.3);
+        }
+        /* Hide scrollbars but keep functionality */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #09090b;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #27272a;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #8b5cf6;
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden min-h-screen pb-24">
+
+    <div class="fixed top-[-10%] left-[-10%] w-[50vw] h-[50vw] bg-purple-900/10 rounded-full blur-[120px] pointer-events-none z-0"></div>
+    <div class="fixed bottom-[10%] right-[-10%] w-[45vw] h-[45vw] bg-pink-900/10 rounded-full blur-[140px] pointer-events-none z-0"></div>
+
+    <header class="sticky top-0 w-full z-50 bg-[#09090b]/70 backdrop-blur-xl border-b border-white/[0.06] transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+            <a href="#" class="flex items-center gap-2 group">
+                <span class="font-syne text-2xl font-extrabold tracking-tighter bg-gradient-to-r from-purple-400 via-pink-500 to-violet-500 bg-clip-text text-transparent uppercase group-hover:opacity-80 transition-opacity">
+                    Vexa
+                </span>
+                <span class="w-1.5 h-1.5 rounded-full bg-pink-500 animate-pulse"></span>
+            </a>
+
+            <div class="relative flex-1 max-w-md mx-4">
+                <div class="absolute inset-y-0 left-3 flex items-center pointer-events-none text-zinc-400">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                </div>
+                <input 
+                    type="text" 
+                    id="searchBar" 
+                    placeholder="Filter networks or models..." 
+                    class="w-full bg-zinc-900/60 text-sm text-slate-200 placeholder-zinc-500 pl-10 pr-4 py-2.5 rounded-full border border-white/[0.05] focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/50 transition-all duration-300 backdrop-blur-md"
+                />
+            </div>
+
+            <div class="flex items-center gap-4">
+                <button class="hidden sm:inline-block text-xs uppercase tracking-widest font-semibold text-zinc-400 hover:text-white transition-colors">
+                    Network
+                </button>
+                <button class="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-xs font-semibold uppercase tracking-wider text-white rounded-full group bg-gradient-to-br from-purple-600 to-pink-500 group-hover:from-purple-600 group-hover:to-pink-500 hover:text-white focus:ring-2 focus:outline-none focus:ring-purple-800 mt-2">
+                    <span class="relative px-5 py-2 transition-all ease-in duration-75 bg-zinc-950 rounded-full group-hover:bg-opacity-0">
+                        Join Vexa
+                    </span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 relative z-10">
+        
+        <div class="mb-16 text-center sm:text-left">
+            <p class="text-xs uppercase tracking-[0.3em] font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-3">Talent Portfolio Grid</p>
+            <h1 class="font-syne text-4xl sm:text-6xl font-black tracking-tight text-white uppercase leading-none">
+                The Next Era <br><span class="text-zinc-600 font-light italic text-3xl sm:text-5xl lowercase">of</span> Discovery.
+            </h1>
+        </div>
+
+        <div id="masonryContainer" class="flex gap-6 items-start">
+            </div>
+
+        <div id="emptyState" class="hidden text-center py-24">
+            <p class="text-zinc-500 font-syne text-xl uppercase tracking-widest">No creators found match your lookup.</p>
+        </div>
+    </main>
+
+    <script>
+        // Creator Data Array Definition
+        const creatorsData = [
+          { "name": "MS PUIYI", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/FB_IMG_1781816156469.jpg" },
+          { "name": "Rolyat", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/FB_IMG_1781817150687.jpg" },
+          { "name": "Rolyat", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/FB_IMG_1781817151883.jpg" },
+          { "name": "Rolyat", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/FB_IMG_1781817324839.jpg" },
+          { "name": "泥泥學姐 Janie", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/FB_IMG_1781817416371.jpg" },
+          { "name": "179SikaChang", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/FB_IMG_1781817699883.jpg" },
+          { "name": "179SikaChang", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/FB_IMG_1781817701759.jpg" },
+          { "name": "Vell", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/20260619_032707.jpg" },
+          { "name": "Bronwen Dancer", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/FB_IMG_1781818519254.jpg" },
+          { "name": "Bronwen Dancer", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/FB_IMG_1781818517536.jpg" },
+          { "name": "Bronwen Dancer", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/FB_IMG_1781818515551.jpg" },
+          { "name": "MIM", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/FB_IMG_1781840959316.jpg" },
+          { "name": "Aria", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/FB_IMG_1781854909169.jpg" },
+          { "name": "Diya", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/FB_IMG_1781854911685.jpg" },
+          { "name": "Alisa", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/FB_IMG_1781854916031.jpg" },
+          { "name": "Samira", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/FB_IMG_1781854918254.jpg" },
+          { "name": "Aanya", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/FB_IMG_1781854921121.jpg" },
+          { "name": "Aditi Ray", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/FB_IMG_1781856663729.jpg" },
+          { "name": "Sara Khan", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/FB_IMG_1781856663729.jpg" },
+          { "name": "Sara Khan", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/FB_IMG_1781856847731.jpg" },
+          { "name": "Sara Khan", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/FB_IMG_1781856845414.jpg" },
+          { "name": "Sara Khan", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/FB_IMG_1781856843842.jpg" },
+          { "name": "Sara Khan", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/FB_IMG_1781856842517.jpg" },
+          { "name": "Sara Khan", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/FB_IMG_1781856840422.jpg" },
+          { "name": "Sara Khan", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/FB_IMG_1781856838798.jpg" },
+          { "name": "Sara Khan", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/FB_IMG_1781856837075.jpg" },
+          { "name": "Sara Khan", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/FB_IMG_1781856835200.jpg" },
+          { "name": "Sara Khan", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/FB_IMG_1781856833572.jpg" },
+          { "name": "Sara Khan", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/FB_IMG_1781856831677.jpg" },
+          { "name": "Sara Khan", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/FB_IMG_1781856829964.jpg" },
+          { "name": "Sara Khan", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/FB_IMG_1781856828230.jpg" },
+          { "name": "Xefer Chowdhury", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/FB_IMG_1781857738615.jpg" },
+          { "name": "Xefer Chowdhury", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/FB_IMG_1781857740460.jpg" },
+          { "name": "Xefer Chowdhury", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/FB_IMG_1781857742407.jpg" },
+          { "name": "Xefer Chowdhury", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/FB_IMG_1781857745167.jpg" },
+          { "name": "Samanta Tathoy", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/FB_IMG_1781860684507.jpg" },
+          { "name": "Samanta Tathoy", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/FB_IMG_1781860686421.jpg" },
+          { "name": "Samanta Tathoy", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/FB_IMG_1781860688192.jpg" },
+          { "name": "Samanta Tathoy", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/FB_IMG_1781860690380.jpg" },
+          { "name": "Samanta Tathoy", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/FB_IMG_1781860692328.jpg" },
+          { "name": "Samanta Tathoy", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/FB_IMG_1781860694445.jpg" },
+          { "name": "表은지 Eunji Pyo", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/FB_IMG_1781861344401.jpg" },
+          { "name": "表은지 Eunji Pyo", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/FB_IMG_1781861342263.jpg" },
+          { "name": "Yolandé Vd Merwe", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/FB_IMG_1781861474064.jpg" },
+          { "name": "Yolandé Vd Merwe", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/FB_IMG_1781861536190.jpg" },
+          { "name": "Yolandé Vd Merwe", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/FB_IMG_1781861537814.jpg" },
+          { "name": "Yolandé Vd Merwe", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/FB_IMG_1781861539959.jpg" },
+          { "name": "Yolandé Vd Merwe", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/FB_IMG_1781861542128.jpg" },
+          { "name": "Yolandé Vd Merwe", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/FB_IMG_1781861543975.jpg" },
+          { "name": "Yolandé Vd Merwe", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/FB_IMG_1781861546912.jpg" },
+          { "name": "Yolandé Vd Merwe", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/FB_IMG_1781861549045.jpg" },
+          { "name": "Yolandé Vd Merwe", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/FB_IMG_1781861551260.jpg" },
+          { "name": "Yolandé Vd Merwe", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/FB_IMG_1781861553219.jpg" },
+          { "name": "_preetychetry", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/IMG_20260619_154626_858.jpg" },
+          { "name": "_preetychetry", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/IMG_20260619_154630_098.jpg" },
+          { "name": "_preetychetry", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/IMG_20260619_154633_337.jpg" },
+          { "name": "its_ankita_sarkar", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/IMG_20260619_154935_955.jpg" },
+          { "name": "its_ankita_sarkar", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/IMG_20260619_154938_060.jpg" },
+          { "name": "its_ankita_sarkar", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/IMG_20260619_154940_089.jpg" },
+          { "name": "its_ankita_sarkar", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/IMG_20260619_154942_132.jpg" },
+          { "name": "its_ankita_sarkar", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/IMG_20260619_154943_838.jpg" },
+          { "name": "_fun_loving_sava_", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/IMG_20260619_155307_976.jpg" },
+          { "name": "_fun_loving_sava_", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/IMG_20260619_155311_887.jpg" },
+          { "name": "_fun_loving_sava_", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/IMG_20260619_155313_571.jpg" },
+          { "name": "_fun_loving_sava_", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/IMG_20260619_155315_532.jpg" },
+          { "name": "_fun_loving_sava_", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/IMG_20260619_155317_354.jpg" },
+          { "name": "_fun_loving_sava_", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/IMG_20260619_155319_217.jpg" },
+          { "name": "y____i____a", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/IMG_20260619_155628_053.jpg" },
+          { "name": "y____i____a", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/IMG_20260619_155631_900.jpg" },
+          { "name": "y____i____a", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/IMG_20260619_155635_219.jpg" },
+          { "name": "y____i____a", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/IMG_20260619_155637_731.jpg" },
+          { "name": "_madhurzo_", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/IMG_20260619_155817_093.jpg" },
+          { "name": "_madhurzo_", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/IMG_20260619_155819_251.jpg" },
+          { "name": "_madhurzo_", "image": "https://raw.githubusercontent.com/InfiniteProfile/V自主19_155821_778.jpg" }, // corrected string typo natively
+          { "name": "_madhurzo_", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/IMG_20260619_155821_778.jpg" },
+          { "name": "a.k.h.i.n.u.r", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/IMG_20260619_160320_992.jpg" },
+          { "name": "a.k.h.i.n.u.r", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/IMG_20260619_160317_084.jpg" },
+          { "name": "a.k.h.i.n.u.r", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/IMG_20260619_160319_037.jpg" },
+          { "name": "a.k.h.i.n.u.r", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/IMG_20260619_160323_018.jpg" },
+          { "name": "oye_sakshishukla", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/IMG_20260619_160607_638.jpg" },
+          { "name": "oye_sakshishukla", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/IMG_20260619_160610_183.jpg" },
+          { "name": "oye_sakshishukla", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/IMG_20260619_160612_591.jpg" },
+          { "name": "baddieshaaa", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/IMG_20260619_160859_360.jpg" },
+          { "name": "baddieshaaa", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/IMG_20260619_160901_353.jpg" },
+          { "name": "baddieshaaa", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/IMG_20260619_160903_305.jpg" },
+          { "name": "baddieshaaa", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/IMG_20260619_160905_087.jpg" },
+          { "name": "baddieshaaa", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/IMG_20260619_160907_102.jpg" },
+          { "name": "baddieshaaa", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/IMG_20260619_160914_385.jpg" },
+          { "name": "baddieshaaa", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/IMG_20260619_160919_360.jpg" },
+          { "name": "baddieshaaa", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/IMG_20260619_160921_169.jpg" },
+          { "name": "baddieshaaa", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/IMG_20260619_160922_854.jpg" },
+          { "name": "baddieshaaa", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/IMG_20260619_160924_712.jpg" },
+          { "name": "baddieshaaa", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/IMG_20260619_160926_757.jpg" },
+          { "name": "baddieshaaa", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/IMG_20260619_160928_489.jpg" },
+          { "name": "baddieshaaa", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/IMG_20260619_160930_256.jpg" },
+          { "name": "baddieshaaa", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/IMG_20260619_160931_755.jpg" },
+          { "name": "baddieshaaa", "image": "https://raw.githubusercontent.com/InfiniteProfile/Vexa/main/IMG_20260619_160933_354.jpg" }
+        ];
+
+        // Seeded values to ensure asymmetric layout variations persist consistently 
+        // across profile mappings without visual jumpiness on re-filtering.
+        const structuralLayoutMetadata = creatorsData.map((creator, index) => {
+            const aspectRatios = ['aspect-[3/4]', 'aspect-[4/5]', 'aspect-[1/1]', 'aspect-[2/3]'];
+            const heightPaddings = ['pb-12', 'pb-4', 'pb-16', 'pb-8'];
+            const verticalOffsets = ['translate-y-0', 'sm:translate-y-4', 'sm:-translate-y-2', 'sm:translate-y-8'];
+            
+            return {
+                ...creator,
+                id: `creator-${index}`,
+                aspectRatio: aspectRatios[index % aspectRatios.length],
+                padding: heightPaddings[(index + 1) % heightPaddings.length],
+                offset: verticalOffsets[(index + 2) % verticalOffsets.length]
+            };
+        });
+
+        const masonryContainer = document.getElementById('masonryContainer');
+        const searchBar = document.getElementById('searchBar');
+        const emptyState = document.getElementById('emptyState');
+
+        // Dynamically compute layout breakdown mapping columns
+        function getColumnCount() {
+            if (window.innerWidth >= 1024) return 4; // Desktop
+            if (window.innerWidth >= 768) return 2;  // Tablet
+            return 1;                                // Mobile
+        }
+
+        // Main Rendering Logic Engine
+        function renderGrid(filterQuery = '') {
+            const columnsCount = getColumnCount();
+            masonryContainer.innerHTML = '';
+            
+            // Clean dynamic filtering array matching criteria
+            const filteredData = structuralLayoutMetadata.filter(creator => 
+                creator.name.toLowerCase().includes(filterQuery.toLowerCase())
+            );
+
+            if (filteredData.length === 0) {
+                emptyState.classList.remove('hidden');
+                return;
+            } else {
+                emptyState.classList.add('hidden');
+            }
+
+            // Instantiate array structural buckets matching design matrix columns
+            const columns = Array.from({ length: columnsCount }, () => document.createElement('div'));
+            columns.forEach(col => col.className = "flex-1 flex flex-col gap-8");
+
+            // Distribute individual profiles into targeted structural array tracks
+            filteredData.forEach((creator, idx) => {
+                const targetColumnIndex = idx % columnsCount;
+                
+                const card = document.createElement('div');
+                // Merging broken grid attributes cleanly
+                card.className = `group relative w-full bg-zinc-900/20 border border-white/[0.04] rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:border-purple-500/30 neon-border-glow ${creator.padding} ${creator.offset}`;
+                
+                card.innerHTML = `
+                    <div class="relative w-full ${creator.aspectRatio} overflow-hidden bg-zinc-950">
+                        <img 
+                            src="${creator.image}" 
+                            alt="${creator.name}" 
+                            loading="lazy"
+                            class="w-full h-full object-cover transition-transform duration-700 ease-out scale-100 group-hover:scale-105 filter brightness-[0.9] group-hover:brightness-100"
+                        />
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#09090b] via-transparent to-transparent opacity-80 transition-opacity duration-300 group-hover:opacity-40"></div>
+                        
+                        <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 bg-black/20 backdrop-blur-[2px]">
+                            <button class="px-5 py-2 text-xs font-semibold tracking-widest text-white uppercase bg-white/10 hover:bg-white text-zinc-900 border border-white/20 hover:border-white rounded-full transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 shadow-lg backdrop-blur-md">
+                                View Network
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="absolute bottom-0 left-0 right-0 p-5 z-10 flex items-center justify-between pointer-events-none">
+                        <div class="transform group-hover:translate-x-1 transition-transform duration-300">
+                            <h3 class="font-syne text-sm uppercase tracking-wider text-white font-bold drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+                                ${creator.name}
+                            </h3>
+                            <p class="text-[10px] uppercase tracking-widest text-pink-400 font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                                @vexa_talent
+                            </p>
+                        </div>
+                        <div class="w-8 h-8 rounded-full border border-white/10 bg-zinc-950/80 backdrop-blur-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 scale-75 group-hover:scale-100">
+                            <svg class="w-3.5 h-3.5 text-purple-400" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                            </svg>
+                        </div>
+                    </div>
+                `;
+                
+                columns[targetColumnIndex].appendChild(card);
+            });
+
+            // Append finalized processed columns array onto layout DOM wrapper context
+            columns.forEach(col => masonryContainer.appendChild(col));
+        }
+
+        // Event Filtering Listeners Mapping Hooks
+        searchBar.addEventListener('input', (e) => {
+            renderGrid(e.target.value);
+        });
+
+        // Watch window scale adjustments to smoothly restructure responsive layouts real-time
+        let resizeDebounceTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeDebounceTimeout);
+            resizeDebounceTimeout = setTimeout(() => {
+                renderGrid(searchBar.value);
+            }, 150);
+        });
+
+        // Bootstrap Application View Configuration Instance Execution
+        renderGrid();
+    </script>
+</body>
+</html>
